@@ -1,0 +1,65 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 60vh;
+}
+
+.form {
+    padding: 3rem;
+    width: 100%;
+    max-width: 400px;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form h1 {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.group label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.group input {
+    padding: 0.75rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: white;
+}
+
+.submitBtn {
+    background: var(--primary);
+    color: black;
+    padding: 1rem;
+    border-radius: 8px;
+    font-weight: 800;
+    text-transform: uppercase;
+    margin-top: 1rem;
+}
+
+.switchBtn {
+    color: var(--accent);
+    font-size: 0.85rem;
+}
+
+.error {
+    color: #ff4a4a;
+    background: rgba(255, 74, 74, 0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 0.9rem;
+}

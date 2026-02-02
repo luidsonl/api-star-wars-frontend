@@ -1,0 +1,80 @@
+.container {
+    padding: 2rem 0;
+}
+
+.backBtn {
+    margin-bottom: 2rem;
+    color: var(--accent);
+    font-weight: 600;
+}
+
+.content {
+    padding: 3rem;
+}
+
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 3rem;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2rem;
+}
+
+.favBtn {
+    background: var(--secondary);
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+    transition: var(--transition);
+}
+
+.favBtn.active {
+    background: var(--primary);
+    color: black;
+    border-color: var(--primary);
+}
+
+.infoGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+}
+
+.infoBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    color: #888;
+    letter-spacing: 1px;
+}
+
+.value {
+    font-size: 1.1rem;
+    color: var(--foreground);
+}
+
+.loader,
+.error {
+    text-align: center;
+    padding: 10rem;
+    font-size: 1.5rem;
+}
+
+.error {
+    color: #ff4a4a;
+}
+
+@media (max-width: 768px) {
+    .header {
+        flex-direction: column;
+        gap: 1.5rem;
+        text-align: center;
+    }
+}

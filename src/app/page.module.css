@@ -1,0 +1,70 @@
+.hero {
+  text-align: center;
+  padding: 4rem 1rem;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.hero p {
+  font-size: 1.25rem;
+  color: #aaa;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  padding: 2rem 0;
+}
+
+.categoryCard {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.categoryCard:hover {
+  transform: scale(1.02);
+  border-color: var(--primary);
+}
+
+.bgImage {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+  filter: grayscale(1) brightness(0.4);
+  transition: var(--transition);
+}
+
+.categoryCard:hover .bgImage {
+  filter: grayscale(0) brightness(0.6);
+  transform: scale(1.1);
+}
+
+.overlay {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+}
+
+.overlay h3 {
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: white;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.8);
+}
+
+@media (max-width: 640px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+}
