@@ -5,8 +5,9 @@ import { useRouter } from 'next/navigation';
 import styles from './Login.module.css';
 
 export default function LoginPage() {
-    const [username, setUsername] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [name, setName] = useState(''); // Campo exclusivo para registro
     const [isRegister, setIsRegister] = useState(false);
     const [error, setError] = useState('');
     const { login } = useAuth();
@@ -18,23 +19,31 @@ export default function LoginPage() {
 
         const endpoint = isRegister ? '/auth/register' : '/auth/login';
 
+        // Envia name apenas se for registro
+        const payload = isRegister
+            ? { email, password, name }
+            : { email, password };
+
         try {
             const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify(payload)
             });
 
             const data = await res.json();
 
-            if (!res.ok) throw new Error(data.message || 'Login failed');
+            if (!res.ok) throw new Error(data.message || 'Action failed');
 
             if (!isRegister) {
-                login({ id: data.user_id, username }, data.access_token);
+                // No login, passamos os dados para o contexto
+                login({ id: data.user.id, email: data.user.email, name: data.user.name }, data.access_token);
                 router.push('/');
             } else {
+                // No registro, apenas avisamos e limpamos o campo de nome
                 setIsRegister(false);
                 setError('Account created! Please login.');
+                setName('');
             }
         } catch (err: any) {
             setError(err.message);
@@ -48,13 +57,27 @@ export default function LoginPage() {
 
                 {error && <p className={styles.error}>{error}</p>}
 
+                {/* Renderiza o campo Name APENAS no registro */}
+                {isRegister && (
+                    <div className={styles.group}>
+                        <label>Name</label>
+                        <input
+                            type="text"
+                            required={isRegister}
+                            value={name}
+                            onChange={(e) => setName(e.target.value)}
+                            placeholder="Your display name"
+                        />
+                    </div>
+                )}
+
                 <div className={styles.group}>
-                    <label>Username</label>
+                    <label>Email</label>
                     <input
-                        type="text"
+                        type="email"
                         required
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)} // Corrigido de setUsername para setEmail
                     />
                 </div>
 
@@ -74,7 +97,10 @@ export default function LoginPage() {
 
                 <button
                     type="button"
-                    onClick={() => setIsRegister(!isRegister)}
+                    onClick={() => {
+                        setIsRegister(!isRegister);
+                        setError('');
+                    }}
                     className={styles.switchBtn}
                 >
                     {isRegister ? 'Already have an account? Login' : "Don't have an account? Register"}

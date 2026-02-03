@@ -39,7 +39,7 @@ export default function Navbar() {
                     <Link href="/planets">Planets</Link>
                     <Link href="/favorites">Favorites</Link>
                     {user ? (
-                        <button onClick={logout} className={styles.authBtn}>Logout ({user.username})</button>
+                        <button onClick={logout} className={styles.authBtn}>Logout ({user.name})</button>
                     ) : (
                         <Link href="/login" className={styles.authBtn}>Login</Link>
                     )}

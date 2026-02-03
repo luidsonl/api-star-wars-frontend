@@ -16,7 +16,8 @@ export type ResourceType = 'people' | 'films' | 'planets' | 'species' | 'starshi
 
 export interface User {
     id: string;
-    username: string;
+    email: string;
+    name: string;
 }
 
 export interface Favorite {
