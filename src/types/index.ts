@@ -22,7 +22,7 @@ export interface User {
 
 export interface Favorite {
     id: string;
-    entity_type: ResourceType;
+    type: ResourceType;
     entity_id: string;
     created_at: string;
 }

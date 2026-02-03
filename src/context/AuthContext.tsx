@@ -70,13 +70,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     };
 
     const isFavorite = (type: string, id: string) => {
-        return favorites.some(f => f.entity_type === type && f.entity_id === id);
+        return favorites.some(f => f.type === type && f.entity_id === id);
     };
 
     const toggleFavorite = async (type: string, id: string) => {
         if (!token) return;
 
-        const existing = favorites.find(f => f.entity_type === type && f.entity_id === id);
+        const existing = favorites.find(f => f.type === type && f.entity_id === id);
 
         try {
             if (existing) {

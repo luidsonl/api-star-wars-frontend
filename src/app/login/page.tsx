@@ -37,7 +37,7 @@ export default function LoginPage() {
 
             if (!isRegister) {
                 // No login, passamos os dados para o contexto
-                login({ id: data.user.id, email: data.user.email, name: data.user.name }, data.access_token);
+                login({ id: data.user.id, email: data.user.email, name: data.user.name }, data.token);
                 router.push('/');
             } else {
                 // No registro, apenas avisamos e limpamos o campo de nome

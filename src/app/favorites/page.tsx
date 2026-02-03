@@ -20,9 +20,9 @@ export default function FavoritesPage() {
 
             await Promise.all(favorites.map(async (fav) => {
                 try {
-                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/${fav.entity_type}/${fav.entity_id}`);
+                    const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080'}/${fav.type}/${fav.entity_id}`);
                     if (res.ok) {
-                        newDetails[`${fav.entity_type}-${fav.entity_id}`] = await res.json();
+                        newDetails[`${fav.type}-${fav.entity_id}`] = await res.json();
                     }
                 } catch (err) {
                     console.error(err);
@@ -56,9 +56,9 @@ export default function FavoritesPage() {
             ) : (
                 <div className={styles.grid}>
                     {favorites.map((fav) => {
-                        const item = details[`${fav.entity_type}-${fav.entity_id}`];
+                        const item = details[`${fav.type}-${fav.entity_id}`];
                         if (!item) return null;
-                        return <Card key={fav.id} item={item} type={fav.entity_type} />;
+                        return <Card key={fav.id} item={item} type={fav.type} />;
                     })}
                 </div>
             )}
