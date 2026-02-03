@@ -64,6 +64,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
                 const data = await response.json();
                 setFavorites(data);
             }
+            if (response.status === 401) {
+                logout();
+            }
         } catch (error) {
             console.error('Failed to fetch favorites', error);
         }
