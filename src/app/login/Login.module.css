@@ -63,3 +63,12 @@
     text-align: center;
     font-size: 0.9rem;
 }
+.success {
+    color: #4aff8d;
+    background: rgba(74, 255, 141, 0.1);
+    padding: 0.75rem;
+    border-radius: 8px;
+    border: 1px solid rgba(74, 255, 141, 0.2);
+    text-align: center;
+    font-size: 0.9rem;
+}

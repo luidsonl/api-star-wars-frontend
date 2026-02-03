@@ -10,12 +10,14 @@ export default function LoginPage() {
     const [name, setName] = useState(''); // Campo exclusivo para registro
     const [isRegister, setIsRegister] = useState(false);
     const [error, setError] = useState('');
+    const [success, setSuccess] = useState('');
     const { login } = useAuth();
     const router = useRouter();
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError('');
+        setSuccess('');
 
         const endpoint = isRegister ? '/auth/register' : '/auth/login';
 
@@ -33,7 +35,7 @@ export default function LoginPage() {
 
             const data = await res.json();
 
-            if (!res.ok) throw new Error(data.message || 'Action failed');
+            if (!res.ok) throw new Error(data.details || 'Action failed');
 
             if (!isRegister) {
                 // No login, passamos os dados para o contexto
@@ -42,7 +44,8 @@ export default function LoginPage() {
             } else {
                 // No registro, apenas avisamos e limpamos o campo de nome
                 setIsRegister(false);
-                setError('Account created! Please login.');
+                setError('');
+                setSuccess('Account created! Please login to continue.');
                 setName('');
             }
         } catch (err: any) {
@@ -56,6 +59,7 @@ export default function LoginPage() {
                 <h1 className="title-sw">{isRegister ? 'Join the Empire' : 'Welcome Back'}</h1>
 
                 {error && <p className={styles.error}>{error}</p>}
+                {success && <p className={styles.success}>{success}</p>}
 
                 {/* Renderiza o campo Name APENAS no registro */}
                 {isRegister && (
