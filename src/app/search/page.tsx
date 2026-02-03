@@ -14,6 +14,7 @@ function SearchContent() {
     const query = searchParams.get('q') || '';
     const [results, setResults] = useState<{ type: ResourceType, data: SwapiResource }[]>([]);
     const [loading, setLoading] = useState(false);
+    const [sortBy, setSortBy] = useState('');
 
     useEffect(() => {
         if (!query) return;
@@ -24,7 +25,7 @@ function SearchContent() {
 
             await Promise.all(RESOURCE_TYPES.map(async (type) => {
                 try {
-                    const res = await swapiService.fetchFromSwapi<SwapiResource>(type, query);
+                    const res = await swapiService.fetchFromSwapi<SwapiResource>(type, query, 1, sortBy);
                     res.results.forEach(item => {
                         allResults.push({ type, data: item });
                     });
@@ -38,11 +39,21 @@ function SearchContent() {
         };
 
         performSearch();
-    }, [query]);
+    }, [query, sortBy]);
 
     return (
         <div className={styles.container}>
-            <h1 className="title-sw">Search Results for "{query}"</h1>
+            <div className={styles.header}>
+                <h1 className="title-sw">Search Results for "{query}"</h1>
+                <select
+                    value={sortBy}
+                    onChange={(e) => setSortBy(e.target.value)}
+                    className={styles.sortSelect}
+                >
+                    <option value="">Sort By</option>
+                    <option value="name">Name (Asc)</option>
+                </select>
+            </div>
 
             {loading ? (
                 <div className={styles.loader}>Scanning the star systems...</div>

@@ -5,11 +5,13 @@ const BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8080';
 export async function fetchFromSwapi<T>(
     resource: ResourceType,
     query: string = '',
-    page: number = 1
+    page: number = 1,
+    sortBy: string = ''
 ): Promise<SwapiResponse<T>> {
     const searchParams = new URLSearchParams();
     if (query) searchParams.append('search', query);
     if (page > 1) searchParams.append('page', page.toString());
+    if (sortBy) searchParams.append('sort_by', sortBy);
 
     const response = await fetch(`${BASE_URL}/${resource}/?${searchParams.toString()}`);
 

@@ -3,6 +3,7 @@
 import { useState, useEffect } from 'react';
 import { swapiService } from '@/services/api';
 import { SwapiResource, ResourceType } from '@/types';
+import { useDebounce } from '@/hooks/useDebounce';
 import Card from '@/components/Card/Card';
 import styles from './ResourceList.module.css';
 
@@ -16,12 +17,15 @@ export default function ResourceListPage({ type, title }: ResourceListPageProps)
     const [loading, setLoading] = useState(true);
     const [page, setPage] = useState(1);
     const [search, setSearch] = useState('');
+    const [sortBy, setSortBy] = useState('');
+
+    const debouncedSearch = useDebounce(search, 500);
 
     useEffect(() => {
         const loadData = async () => {
             setLoading(true);
             try {
-                const res = await swapiService.fetchFromSwapi<SwapiResource>(type, search, page);
+                const res = await swapiService.fetchFromSwapi<SwapiResource>(type, debouncedSearch, page, sortBy);
                 setData(res);
             } catch (err) {
                 console.error(err);
@@ -30,7 +34,7 @@ export default function ResourceListPage({ type, title }: ResourceListPageProps)
             }
         };
         loadData();
-    }, [type, page, search]);
+    }, [type, page, debouncedSearch, sortBy]);
 
     return (
         <div className={styles.container}>
@@ -44,6 +48,14 @@ export default function ResourceListPage({ type, title }: ResourceListPageProps)
                         onChange={(e) => { setSearch(e.target.value); setPage(1); }}
                         className={styles.filterInput}
                     />
+                    <select
+                        value={sortBy}
+                        onChange={(e) => { setSortBy(e.target.value); setPage(1); }}
+                        className={styles.sortSelect}
+                    >
+                        <option value="">Sort By</option>
+                        <option value="name">Name (Asc)</option>
+                    </select>
                 </div>
             </div>
 
